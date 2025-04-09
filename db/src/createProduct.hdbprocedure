@@ -1,0 +1,58 @@
+PROCEDURE "createProduct" (
+    IN P_PRODUCT TABLE (
+        "NODE_KEY"  NVARCHAR(32),
+        "PRODUCT_ID" NVARCHAR(32),
+        "TYPE_CODE" NVARCHAR(2),
+        "CATEGORY"  NVARCHAR(32),
+        "DESCRIPTION"   NVARCHAR(255),
+        "SUPPLIER_GUID_NODE_KEY"    NVARCHAR(32),
+        "TAX_TARIF_CODE"    INTEGER,
+        "MEASURE_UNIT"  NVARCHAR(2),
+        "WEIGHT_MEASURE"    DECIMAL(5),
+        "WEIGHT_UNIT"   NVARCHAR(2),
+        "CURRENCY_CODE" NVARCHAR(4),
+        "PRICE"     DECIMAL(15),
+        "WIDTH"     DECIMAL(15),
+        "HEIGHT"    DECIMAL(15),
+        "DIM_UNIT"  NVARCHAR(2)
+    )
+)
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER
+    AS
+BEGIN
+    INSERT INTO "SOA_DB_MASTER_PRODUCT"
+    (
+        "NODE_KEY",
+        "PRODUCT_ID",
+        "TYPE_CODE",
+        "CATEGORY",
+        "DESCRIPTION",
+        "SUPPLIER_GUID_NODE_KEY",
+        "TAX_TARIF_CODE",
+        "MEASURE_UNIT",
+        "WEIGHT_MEASURE",
+        "WEIGHT_UNIT",
+        "CURRENCY_CODE",
+        "PRICE",
+        "WIDTH",
+        "HEIGHT",
+        "DIM_UNIT"
+    )
+    SELECT         "NODE_KEY",
+    "PRODUCT_ID",
+    "TYPE_CODE",
+    "CATEGORY",
+    "DESCRIPTION",
+    "SUPPLIER_GUID_NODE_KEY",
+    "TAX_TARIF_CODE",
+    "MEASURE_UNIT",
+    "WEIGHT_MEASURE",
+    "WEIGHT_UNIT",
+    "CURRENCY_CODE",
+    "PRICE",
+    "WIDTH",
+    "HEIGHT",
+    "DIM_UNIT"
+    FROM :P_PRODUCT ;
+END;

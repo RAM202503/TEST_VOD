@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "My Configuration",
+      "command": "cds watch",
+      "request": "launch",
+      "type": "node",
+      "cwd": "${workspaceFolder}//soa",
+      "runtimeExecutable": "cds",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}

@@ -17,8 +17,11 @@ service CatalogService@(path: 'CatalogService', requires: 'authenticated-user'){
     @readonly
     entity AddressS as projection on master.address;
 
-    @Capabilities : {Updatable : false, Deletable : false}
-    entity EmployeeS as projection on master.employees;
+    entity EmployeeS@(restrict: [
+        { grant : ['READ'], to : 'Viewer', where: 'bankName = $user.BankName'},
+        {grant: ['WRITE'], to: 'Admin' }
+    ]
+    ) as projection on master.employees;
     entity ProdcutsS as projection on master.product;
     entity POService @(odata.draft.enabled: true) as projection on trasaction.purchaseorder{
         *,
@@ -56,7 +59,7 @@ service CatalogService@(path: 'CatalogService', requires: 'authenticated-user'){
 
     // Normal Action
     action helloCap(name : String(100)) returns String(100);
-    action userLogin(username: String(32), pwd : String(32)) returns String(100);
+    // action userLogin(username: String(32), pwd : String(32)) returns String(100);
 
 }
 

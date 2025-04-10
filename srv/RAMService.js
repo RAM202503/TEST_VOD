@@ -1,3 +1,5 @@
+const { db } = require("@sap/cds");
+const db = await cds.connect.to('db');
 module.exports = cds.service.impl( async function(){
     // Refrence to your entity
     const { POService, EmployeeS } = this.entities;
@@ -14,6 +16,24 @@ module.exports = cds.service.impl( async function(){
                 }).where(ID);
     
                 return ID ;
+        } catch (error) {
+            return "Error" + error.toString();
+        }
+    }),
+    this.on('userLogin', async(request, response) => {
+        try {
+            var arrUserLogin = [];
+            var struUserLogin = {};
+            struUserLogin.username = request.data.username;
+            struUserLogin.pwd = request.data.pwd;
+            arrUserLogin.push(struUserLogin);
+            // Declare promisfied class
+            const dbClass = require("sap-hdbext-promisfied");
+            const hdbext = require("@sap/hdbext");
+            let dbConn = new dbClass(await dbClass.createConnection(db.operations.credentials));
+            const sp = await dbClass.loadProcedurePromisfied(hdbext, null, 'createUser');
+            const output = await dbConn.callProcedurePromisified(sp,arrUserLogin)
+            return output;
         } catch (error) {
             return "Error" + error.toString();
         }

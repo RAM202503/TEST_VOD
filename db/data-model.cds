@@ -67,6 +67,11 @@ context master {
         bankId : String(15);
         bankName : String(64);
     }
+
+    entity user {
+        username : String(32);
+        pwd : String(32); 
+    }
 }
 
 context trasaction {

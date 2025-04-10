@@ -1,0 +1,19 @@
+{
+    "welcomeFile" : "pomanage/webapp/",
+    "authenticationMethod" : "route",
+    "sessionTimeout" : 100,
+    "pluginMetadataEndpoint" : "/metadata",
+    "routes" : [
+        {
+            "source" : "^/pomanage/webapp/(.*)",
+            "target" : "$1",
+            "localDir" : "pomanage/webapp/",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source" : "^/(.*)$",
+            "destination" : "srv-api",
+            "authenticationType": "xsuaa"
+        }
+    ]
+}
